@@ -5,8 +5,9 @@ python -m pip freeze > requirements.txt
 
 
 python -m venv nome_ambiente 
-Sachete: genv
+Sachete: genv .genv\scripts\activate
 SacheteNote: gnenv
+
 Ativar ambiente virtual (powershell)
 .nome\scripts\activate ou \nome\scripts\activate
 
