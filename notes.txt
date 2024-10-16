@@ -1,0 +1,15 @@
+instalaçoes
+pip freeze
+python -m pip freeze > requirements.txt
+
+
+
+python -m venv nome_ambiente 
+Sachete: genv
+SacheteNote: gnenv
+Ativar ambiente virtual (powershell)
+.nome\scripts\activate ou \nome\scripts\activate
+
+
+ctrl + p
+>Python: Select Interpreter
