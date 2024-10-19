@@ -14,3 +14,4 @@ Ativar ambiente virtual (powershell)
 
 ctrl + p
 >Python: Select Interpreter
+python manage.py runserver
