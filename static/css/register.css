@@ -1,0 +1,64 @@
+body {
+    background-color: #FFEC3D;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Garante que a altura da tela seja total */
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+}
+
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Garante que ocupe toda a largura */
+    height: 100%; /* Garante que ocupe toda a altura */
+}
+
+.register-box {
+    background-color: #ffcc66;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px; /* Aumenta o tamanho da caixa */
+    width: 100%;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #333;
+}
+
+input, select {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 2px solid #d4d4d4;
+    background-color: #D4D800; /* Cor de fundo dos inputs */
+    color: #333;
+}
+
+button {
+    background-color: #b2ec47;
+    border: none;
+    padding: 12px 20px;
+    color: white;
+    font-size: 18px; /* Aumenta o tamanho do texto do botão */
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #8cc63f;
+}
+
+.datepicker {
+    background-color: #D4D800;
+    border: 2px solid #d4d4d4;
+    padding: 10px;
+    border-radius: 5px;
+}

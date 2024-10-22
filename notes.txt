@@ -11,6 +11,13 @@ SacheteNote: gnenv
 Ativar ambiente virtual (powershell)
 .nome\scripts\activate ou \nome\scripts\activate
 
+Banco:
+python manage.py makemigrations
+python manage.py migrate
+
+
+
+
 
 ctrl + p
 >Python: Select Interpreter
