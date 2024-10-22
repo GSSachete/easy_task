@@ -6,6 +6,13 @@
     <title>Login</title>
 </head>
 <body>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+    <p>Ainda não tem conta? <a href="{% url 'register' %}">Registrar-se</a></p>
+    
     
 </body>
 </html>
