@@ -1,0 +1,75 @@
+body {
+    background-color: #ffec3d;
+    font-family: Arial, sans-serif;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+}
+
+.login-box {
+    background-color: #ffcc66;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    width: 400px; 
+    max-width: 400px;
+}
+
+h1 {
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.input-container {
+    margin-bottom: 20px;
+}
+
+.input-container label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.input-container input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #d1ff00;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    background-color: #d1ff00;
+    padding: 12px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.sunflower-image {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 800px; 
+}
+
+.bee-image {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    width: 500px; 
+}

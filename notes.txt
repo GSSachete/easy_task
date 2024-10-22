@@ -18,6 +18,10 @@ startar server
 python manage.py runserver
 
 Para joao
+Rotas:
+/login
+/registrar
+/menu
 usuarios: gabi, jp,g
 senha: Begosso10!
 
