@@ -15,7 +15,7 @@
                 {% csrf_token %}
                 <div class="input-container">
                     <label for="nome">Nome</label>
-                    {{ form.nome }}
+                    {{ form.username }}
                 </div>
                 <div class="input-container">
                     <label for="escolaridade">Escolaridade</label>
@@ -35,7 +35,11 @@
                 </div>
                 <div class="input-container">
                     <label for="senha">Senha</label>
-                    {{ form.senha }}
+                    {{ form.password1 }}  <!-- Campo para a primeira senha -->
+                </div>
+                <div class="input-container">
+                    <label for="confirmar-senha">Confirmar Senha</label>
+                    {{ form.password2 }}  <!-- Campo para confirmar a senha -->
                 </div>
                 <div class="button-container">
                     <button type="submit">Registrar</button>
@@ -43,6 +47,7 @@
             </form>
             
             <p><a href="{% url 'login' %}">Já tenho uma conta</a></p>
-        
+        </div>
+    </div>
 </body>
 </html>
