@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Quadro</title>
+</head>
+<body>
+    <h1>Editar Quadro</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Salvar Alterações</button>
+    </form>
+    <a href="{% url 'menu' %}">Voltar ao Menu</a>
+</body>
+</html>

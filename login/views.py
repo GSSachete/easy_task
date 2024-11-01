@@ -60,3 +60,7 @@ def register(request):
 def user_logout(request):
     auth_logout(request)
     return redirect('login')
+
+
+    from django.views.decorators.csrf import csrf_protect
+
