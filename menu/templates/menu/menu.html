@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu de Tarefas</title>
+    <link rel="stylesheet" href="{% static 'css/menu.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <button class="menu-button">Menu</button>
+        </div>
+        <div class="navbar-right">
+            <span class="user-icon">👤</span>
+            <span class="username">{{ user.username }}</span>
+            <a href="{% url 'logout' %}" class="logout-link">Sair</a>
+        </div>
+    </nav>
+
+    <h1>Quadros criados</h1>
+    <div class="quadro-container">
+        <div class="quadro urgente">Urgente</div>
+        <div class="quadro proximo">Está Próximo</div>
+        <div class="quadro distante">Distante</div>
+    </div>
+    <button onclick="window.location.href='{% url 'adicionar_tarefa' %}';">Novo Quadro</button>
+
+    <!-- Rodapé -->
+    <div class="footer">
+        bzzzz
+    </div>
+</body>
+</html>

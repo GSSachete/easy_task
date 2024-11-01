@@ -24,7 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', include('login.urls')), 
     path('registrar/', login_views.register, name='register'), 
-    path('menu/', include('menu.urls')),    
+     path('menu/', include('menu.urls')),  
     path('', lambda request: redirect('login')), 
 ]
 
