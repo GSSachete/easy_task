@@ -14,8 +14,12 @@
             <form method="post">
                 {% csrf_token %}
                 <div class="input-container">
-                    <label for="nome">Nome</label>
+                    <label for="username">Usuário</label>
                     {{ form.username }}
+                </div>
+                <div class="input-container">
+                    <label for="nome">Nome completo</label>
+                    {{ form.nome }}
                 </div>
                 <div class="input-container">
                     <label for="escolaridade">Escolaridade</label>

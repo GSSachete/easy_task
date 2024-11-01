@@ -33,3 +33,6 @@ usuarios: gabi, jp,g
 senha: Begosso10!
 
 sempre que criar um app criar urls e forms, nao esquecer de colocar o app no settings e configurar a rota
+sueruser
+sachete 
+123
