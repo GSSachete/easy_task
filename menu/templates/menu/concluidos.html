@@ -29,9 +29,9 @@
                     <p><strong>Criador:</strong> {{ tarefa.usuario.username }}</p>
 
                     <p><strong>Participantes:</strong>
-                        {% if tarefa.participantes.exists %}
+                        {% if tarefa.participantes.all %}
                             {% for participante in tarefa.participantes.all %}
-                                {{ participante.usuario }}{% if not forloop.last %}, {% endif %}
+                                {{ participante.user.username }}{% if not forloop.last %}, {% endif %}
                             {% endfor %}
                         {% else %}
                             Apenas o criador

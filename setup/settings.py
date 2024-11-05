@@ -28,6 +28,14 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 DEBUG = True
 
 ALLOWED_HOSTS = []
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
 
 
 # Application definition
@@ -41,8 +49,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'login',
     'menu',
+    'channels',
+    'channelss',
 ]
-
+ASGI_APPLICATION = 'setup.asgi.application'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

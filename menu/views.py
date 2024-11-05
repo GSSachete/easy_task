@@ -93,20 +93,27 @@ def excluir_quadro(request, quadro_id):
 
 @login_required
 def concluidos(request):
-    usuario_instancia = Usuario.objects.get(user=request.user)
+    # Tenta obter a instância de Usuario associada ao usuário logado
+    try:
+        usuario_instancia = Usuario.objects.get(user=request.user)
+    except Usuario.DoesNotExist:
+        messages.error(request, "Você não possui um perfil de usuário registrado.")
+        return redirect('menu')
 
+    # Filtra as tarefas concluídas onde o usuário logado (request.user) é o criador
+    # ou onde o usuario_instancia está nos participantes
     tarefas_concluidas = Tarefa.objects.filter(
         concluida=True,
-        usuario=request.user  
+        usuario=request.user  # Usa request.user (instância de User)
     ) | Tarefa.objects.filter(
         concluida=True,
-        participantes=usuario_instancia  
+        participantes=usuario_instancia  # Usa usuario_instancia (instância de Usuario)
     )
 
+    # Remove duplicatas caso o usuário seja tanto criador quanto participante
     tarefas_concluidas = tarefas_concluidas.distinct()
 
     return render(request, 'menu/concluidos.html', {'tarefas_concluidas': tarefas_concluidas})
-
 
 @login_required
 def concluir_tarefa(request, quadro_id):

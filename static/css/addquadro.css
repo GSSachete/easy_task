@@ -1,0 +1,106 @@
+/* Fundo amarelo para a página */
+body {
+    background-color: #FFFF00; /* Fundo amarelo */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Navbar verde */
+.navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #00FF00; /* Verde */
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.navbar h1 {
+    color: #333;
+    font-size: 2.5em;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Seção principal */
+.content {
+    width: 90%;
+    max-width: 500px;
+    background-color: #FFF8DC; /* Cor de fundo clara para o formulário */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border: 5px solid #FFD700; /* Borda dourada */
+    margin-bottom: 20px;
+}
+
+/* Estilo do formulário */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+form input[type="text"],
+form textarea,
+form select {
+    padding: 10px;
+    font-size: 1.1em;
+    border: 2px solid #00FF00; /* Borda verde */
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+form input[type="text"]:focus,
+form textarea:focus,
+form select:focus {
+    transform: scale(1.05); /* Efeito de zoom ao focar */
+    border-color: #00FF00; 
+}
+
+form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Botão de envio */
+.submit-button {
+    padding: 12px 25px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #FFF;
+    background-color: #00FF00; 
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, transform 0.2s;
+    align-self: center;
+}
+
+.submit-button:hover {
+    background-color: #00FF00; 
+    transform: scale(1.1); /* Aumenta o botão ao passar o mouse */
+}
+
+/* Texto de ajuda para participantes */
+.help-text {
+    font-size: 0.9em;
+    color: #666;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    font-style: italic;
+}

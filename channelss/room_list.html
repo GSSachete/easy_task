@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salas de Chat</title>
+</head>
+<body>
+    <h1>Salas de Chat</h1>
+
+    <h2>Criar Nova Sala</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Criar Sala</button>
+    </form>
+
+    <h2>Salas Existentes</h2>
+    <ul>
+        {% for room in rooms %}
+            <li><a href="{% url 'chat_room' room.name %}">{{ room.name }}</a></li>
+        {% empty %}
+            <li>Nenhuma sala disponível.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
