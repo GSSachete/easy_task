@@ -1,5 +1,5 @@
 body {
-    background-color: #FFFF00; /* Amarelo */
+    background-color: #FFFFE0;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -8,17 +8,15 @@ body {
     align-items: center;
 }
 
-/* Navbar */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #00FF00; /* Verde */
+    background-color: #00FF00;
     width: 100%;
     padding: 10px 20px;
 }
 
-/* Conteúdo principal */
 .content h2 {
     font-size: 2em;
     font-weight: bold;
@@ -27,7 +25,6 @@ body {
     text-align: center;
 }
 
-/* Contêiner dos quadros */
 .quadro-container {
     display: flex;
     flex-wrap: wrap;
@@ -38,39 +35,95 @@ body {
     margin-top: 20px;
 }
 
-/* Estilos dos Quadros */
 .quadro-card {
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 1rem;
     width: 180px;
+    height: 180px;
     text-align: center;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
-    border-left: 6px solid;
+    position: relative;
+    transform: rotate(-3deg);
 }
 
-.quadro-card:hover {
-    transform: scale(1.05);
-}
-
-/* Cores para Prioridade */
 .urgente {
-    border-color: red;
-    background-color: #fa0000;
+    background-color: #fa8072;
+    border-left: 6px solid red;
 }
 
 .proximo {
-    border-color: #ffcc00;
-    background-color: #ffff00;
+    background-color: #ffff80;
+    border-left: 6px solid #ffcc00;
 }
 
 .distante {
-    border-color: green;
-    background-color: #008300;
+    background-color: #80c080;
+    border-left: 6px solid green;
 }
 
-/* Botão de Novo Quadro */
+.edit-icon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    transition: transform 0.2s;
+}
+
+.edit-icon svg {
+    width: 24px;
+    height: 24px;
+    fill: #00a2ff
+}
+
+.edit-icon:hover {
+    transform: scale(1.2);
+}
+
+.delete-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    transition: transform 0.2s;
+}
+
+.delete-icon svg {
+    width: 24px;
+    height: 24px;
+    fill: #FF0000;
+}
+
+.delete-icon:hover {
+    transform: scale(1.2);
+}
+
+.check-icon {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    transition: transform 0.2s;
+}
+
+.check-icon:hover {
+    transform: scale(1.2);
+}
+
+.quadro-card:hover {
+    transform: scale(1.05) rotate(-3deg);
+}
+
+.quadro-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+}
+
+.quadro-description {
+    font-size: 0.9em;
+    color: #555;
+    margin-top: 10px;
+}
+
 .button-container {
     margin-top: 40px;
     text-align: center;
@@ -94,7 +147,6 @@ body {
     transform: translateY(-5px);
 }
 
-/* Rodapé */
 .footer {
     width: 100%;
     background-color: #00FF00;
@@ -104,4 +156,11 @@ body {
     font-size: 1.2em;
     color: #333;
     margin-top: 20px;
+}
+.quadro-card.concluido {
+    background-color: #d0e7ff; 
+    border-left: 6px solid #4a90e2; 
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 1rem;
 }

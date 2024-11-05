@@ -1,16 +1,23 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Novo Quadro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Quadro</title>
+    <link rel="stylesheet" href="{% static 'css/menu.css' %}">
 </head>
 <body>
-    <h1>Criar Novo Quadro</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Adicionar Quadro</button>
-    </form>
-    <a href="{% url 'menu' %}">Voltar ao Menu</a>
+    <nav class="navbar">
+        <h1>Adicionar Novo Quadro</h1>
+    </nav>
+
+    <section class="content">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="submit-button">Adicionar Quadro</button>
+        </form>
+    </section>
 </body>
 </html>

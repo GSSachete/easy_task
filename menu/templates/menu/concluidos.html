@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarefas Concluídas</title>
+    <link rel="stylesheet" href="{% static 'css/menu.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <h1>BZZ TASK - Concluídos</h1>
+        </div>
+        <div class="navbar-right">
+            <a href="{% url 'menu' %}" class="back-to-menu">Voltar ao Menu</a>
+        </div>
+    </nav>
+
+    <section class="content">
+        <h2>Tarefas Concluídas</h2>
+        <div class="quadro-container">
+            {% for tarefa in tarefas_concluidas %}
+                <div class="quadro-card concluido">
+                    <h3 class="quadro-title">{{ tarefa.titulo }}</h3>
+                    <p class="quadro-description">{{ tarefa.descricao }}</p>
+
+                    <p><strong>Criador:</strong> {{ tarefa.usuario.username }}</p>
+
+                    <p><strong>Participantes:</strong>
+                        {% if tarefa.participantes.exists %}
+                            {% for participante in tarefa.participantes.all %}
+                                {{ participante.usuario }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            Apenas o criador
+                        {% endif %}
+                    </p>
+
+                    <a href="{% url 'excluir_quadro' tarefa.id %}" onclick="return confirm('Tem certeza que deseja excluir esta tarefa?');" class="delete-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FF0000" viewBox="0 0 24 24">
+                            <path d="M3 6l3 18h12l3-18h-18zm5 15h-2v-12h2v12zm6 0h-2v-12h2v12zm4-12h2v12h-2v-12zm-9-4v-3h6v3h9v2h-24v-2h9z"/>
+                        </svg>
+                    </a>
+                </div>
+            {% empty %}
+                <p class="no-quadros">Nenhuma tarefa concluída ainda.</p>
+            {% endfor %}
+        </div>
+    </section>
+</body>
+</html>

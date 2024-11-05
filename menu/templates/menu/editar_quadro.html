@@ -1,16 +1,24 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Quadro</title>
+    <link rel="stylesheet" href="{% static 'css/menu.css' %}">
 </head>
 <body>
-    <h1>Editar Quadro</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Salvar Alterações</button>
-    </form>
-    <a href="{% url 'menu' %}">Voltar ao Menu</a>
+    <nav class="navbar">
+        <h1>Editar Quadro</h1>
+        <a href="{% url 'menu' %}" class="back-link">Voltar ao Menu</a>
+    </nav>
+
+    <section class="content">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="submit-button">Salvar Alterações</button>
+        </form>
+    </section>
 </body>
 </html>

@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarefas em Grupo</title>
+    <link rel="stylesheet" href="{% static 'css/menu.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <h1>BZZ TASK - Tarefas em Grupo</h1>
+        </div>
+        <div class="navbar-right">
+            <a href="{% url 'menu' %}" class="back-to-menu">Voltar ao Menu</a>
+        </div>
+    </nav>
+
+    <section class="content">
+        <h2>Tarefas em Grupo</h2>
+        <div class="quadro-container">
+            {% for tarefa in tarefas %}
+                <div class="quadro-card 
+                    {% if tarefa.prioridade == 'urgente' %}urgente{% endif %}
+                    {% if tarefa.prioridade == 'proximo' %}proximo{% endif %}
+                    {% if tarefa.prioridade == 'distante' %}distante{% endif %}
+                ">
+                    <h3 class="quadro-title">{{ tarefa.titulo }}</h3>
+                    <p class="quadro-description">{{ tarefa.descricao }}</p>
+                    <span class="quadro-prioridade">Prioridade: {{ tarefa.get_prioridade_display }}</span>
+
+                    <!-- Exibe o criador da tarefa -->
+                    <p><strong>Criador:</strong> {{ tarefa.usuario.username }}</p>
+
+                    <!-- Exibe os participantes -->
+                    <p class="quadro-participantes">
+                        <strong>Participantes:</strong>
+                        {% for participante in tarefa.participantes.all %}
+                            {{ participante.usuario }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                </div>
+            {% empty %}
+                <p class="no-quadros">Nenhuma tarefa em grupo ainda.</p>
+            {% endfor %}
+        </div>
+    </section>
+</body>
+</html>

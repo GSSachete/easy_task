@@ -12,8 +12,9 @@ class Tarefa(models.Model):
     descricao = models.TextField(blank=True, null=True)
     categoria = models.CharField(max_length=20)
     concluida = models.BooleanField(default=False)
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    prioridade = models.CharField(max_length=10, choices=PRIORIDADE_CHOICES, default='distante')  # Novo campo
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)  
+    participantes = models.ManyToManyField('login.Usuario', related_name="tarefas")
+    prioridade = models.CharField(max_length=10, choices=PRIORIDADE_CHOICES, default='distante')
 
     def __str__(self):
         return self.titulo

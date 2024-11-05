@@ -8,20 +8,19 @@
     <link rel="stylesheet" href="{% static 'css/menu.css' %}">
 </head>
 <body>
-    <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-left">
-            <button class="menu-button">☰ Menu</button>
             <h1>BZZ TASK</h1>
         </div>
         <div class="navbar-right">
             <span class="user-icon">👤</span>
             <span class="username">{{ user.username }}</span>
+            <a href="{% url 'tarefas_em_grupo' %}" class="grupo-link">Tarefas em Grupo</a>
+            <a href="{% url 'concluidos' %}" class="concluidos-link">Concluídos</a> 
             <a href="{% url 'logout' %}" class="logout-link">Sair</a>
         </div>
     </nav>
-
-    <!-- Mensagem de Tarefa Concluída -->
+    
     {% if messages %}
         <div class="message-container">
             {% for message in messages %}
@@ -30,11 +29,9 @@
         </div>
     {% endif %}
 
-    <!-- Título Principal -->
     <section class="content">
         <h2>Quadros Criados</h2>
 
-        <!-- Contêiner dos quadros -->
         <div class="quadro-container">
             {% for quadro in quadros %}
                 <div class="quadro-card 
@@ -43,11 +40,37 @@
                     {% elif quadro.prioridade == 'distante' %}distante
                     {% endif %}">
                     <h3 class="quadro-title">{{ quadro.titulo }}</h3>
+                    <p class="quadro-categoria">{{ quadro.categoria }}</p>
                     <p class="quadro-description">{{ quadro.descricao }}</p>
-                    <span class="quadro-prioridade">Prioridade: {{ quadro.prioridade|title }}</span>
+
+                    <!-- Exibe os participantes se a tarefa for em grupo -->
+                    {% if quadro.participantes.exists %}
+                        <p class="quadro-participantes">
+                            <strong>Participantes:</strong>
+                            {% for participante in quadro.participantes.all %}
+                                {{ participante.usuario }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </p>
+                    {% else %}
+                        <p class="quadro-participantes"><strong>Participantes:</strong> Apenas você</p>
+                    {% endif %}
+
                     <div class="quadro-actions">
-                        <a href="{% url 'editar_quadro' quadro.id %}">Editar</a> | 
-                        <a href="{% url 'excluir_quadro' quadro.id %}" onclick="return confirm('Tem certeza que deseja concluir e excluir esta tarefa?');">Concluir</a>
+                        <a href="{% url 'editar_quadro' quadro.id %}" class="edit-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FFA500" viewBox="0 0 24 24">
+                                <path d="M3 17.25V21h3.75l11.06-11.06-3.75-3.75L3 17.25zm3.25-1.5L14.75 7 17 9.25l-8.5 8.5H6v-1.5z"/>
+                            </svg>
+                        </a>
+                        <a href="{% url 'excluir_quadro' quadro.id %}" onclick="return confirm('Tem certeza que deseja excluir esta tarefa?');" class="delete-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FF0000" viewBox="0 0 24 24">
+                                <path d="M3 6l3 18h12l3-18h-18zm5 15h-2v-12h2v12zm6 0h-2v-12h2v12zm4-12h2v12h-2v-12zm-9-4v-3h6v3h9v2h-24v-2h9z"/>
+                            </svg>
+                        </a>
+                        <a href="{% url 'concluir_tarefa' quadro.id %}" onclick="return confirm('Tem certeza que deseja concluir esta tarefa?');" class="check-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#4CAF50" viewBox="0 0 24 24">
+                                <path d="M9 16.2l-3.5-3.5L4 14l5 5 12-12-1.5-1.5L9 16.2z"/>
+                            </svg>
+                        </a>
                     </div>
                 </div>
             {% empty %}
@@ -55,13 +78,11 @@
             {% endfor %}
         </div>
 
-        <!-- Botão para adicionar novo quadro -->
         <div class="button-container">
             <button class="add-quadro-button" onclick="window.location.href='{% url 'adicionar_quadro' %}';">+ Novo Quadro</button>
         </div>
     </section>
 
-    <!-- Rodapé -->
     <footer class="footer">
         <p>&copy; 2024 BZZ TASK. Todos os direitos reservados. 🐝</p>
     </footer>
