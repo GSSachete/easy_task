@@ -55,8 +55,21 @@
                             {% endfor %}
                         </p>
                     {% else %}
-                        <p class="quadro-participantes"><strong>Participantes:</strong> Apenas você</p>
+                        <p class="quadro-participantes"><strong>Participantes:</strong> Você</p>
                     {% endif %}
+
+                    <!-- Ajustando a exibição do arquivo anexado -->
+                    <div class="quadro-arquivos">
+                        {% if quadro.arquivo %}
+                            <a href="{{ quadro.arquivo.url }}" download="{{ quadro.arquivo.name }}" class="download-link">
+                                <!-- Ícone de pasta em SVG -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M10 4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6z"></path>
+                                </svg>
+                            </a>
+                        {% endif %}
+                    </div>
+                    
 
                     <div class="quadro-actions">
                         <a href="{% url 'editar_quadro' quadro.id %}" class="edit-icon">
@@ -122,6 +135,7 @@
 
         <!-- Entrada de mensagem -->
         <div class="message-input-container">
+            <label for="chat-message-input">Mensagem:</label> <!-- Adicionando um label semelhante -->
             <input id="chat-message-input" type="text" placeholder="Digite sua mensagem...">
             <button id="chat-message-send" class="send-button">Enviar</button>
         </div>

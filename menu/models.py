@@ -15,6 +15,7 @@ class Tarefa(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)  
     participantes = models.ManyToManyField('login.Usuario', related_name="tarefas")
     prioridade = models.CharField(max_length=10, choices=PRIORIDADE_CHOICES, default='distante')
+    arquivo = models.FileField(upload_to='tarefas_arquivos/', blank=True, null=True)  
 
     def __str__(self):
         return self.titulo

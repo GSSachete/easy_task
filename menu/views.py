@@ -29,11 +29,16 @@ def menu(request):
 @login_required
 def adicionar_quadro(request):
     if request.method == 'POST':
-        form = TarefaForm(request.POST)
+        form = TarefaForm(request.POST, request.FILES)  # Inclua request.FILES para lidar com arquivos
         if form.is_valid():
             tarefa = form.save(commit=False)
             tarefa.usuario = request.user  
-            tarefa.save()  
+            tarefa.save()
+
+            # Salva os arquivos se houver algum (supondo que o campo seja um FileField ou ImageField diretamente em Tarefa)
+            if request.FILES.get('arquivo'):
+                tarefa.arquivo = request.FILES.get('arquivo')  # Atribua o arquivo diretamente ao campo
+                tarefa.save()
 
             nomes_usuarios = form.cleaned_data.get('participantes')
             if nomes_usuarios:
@@ -44,11 +49,13 @@ def adicionar_quadro(request):
                         tarefa.participantes.add(usuario)
                     except Usuario.DoesNotExist:
                         pass
-            
+
             return redirect('menu')  
     else:
         form = TarefaForm()
     return render(request, 'menu/adicionar_quadro.html', {'form': form})
+
+
 
 
 
@@ -58,9 +65,13 @@ def editar_quadro(request, quadro_id):
     quadro = get_object_or_404(Tarefa, id=quadro_id, usuario=request.user)  
 
     if request.method == 'POST':
-        form = TarefaForm(request.POST, instance=quadro)
+        form = TarefaForm(request.POST, request.FILES, instance=quadro)
         if form.is_valid():
             quadro = form.save(commit=False)  
+
+            # Substitui o arquivo existente se um novo for enviado
+            if request.FILES.get('arquivo'):
+                quadro.arquivo = request.FILES.get('arquivo')  # Substitui ou atribui diretamente o arquivo
             quadro.save()
 
             nomes_usuarios = form.cleaned_data.get('participantes')
@@ -85,6 +96,7 @@ def editar_quadro(request, quadro_id):
         form = TarefaForm(instance=quadro, initial={'participantes': nomes_existentes})
 
     return render(request, 'menu/editar_quadro.html', {'form': form, 'quadro': quadro})
+
 
 
 @login_required
@@ -135,6 +147,7 @@ def adicionar_participante(tarefa, nome_usuario):
 def tarefas_em_grupo(request):
     usuario = request.user
 
+    # Obtém as tarefas em grupo relacionadas ao usuário
     tarefas_em_grupo = Tarefa.objects.filter(
         participantes__user=usuario,
         concluida=False
@@ -143,10 +156,20 @@ def tarefas_em_grupo(request):
         participantes__isnull=False,
         concluida=False
     )
-
     tarefas_em_grupo = tarefas_em_grupo.distinct()
 
-    return render(request, 'menu/tarefas_em_grupo.html', {'tarefas': tarefas_em_grupo})
+    # Filtra as pessoas envolvidas em cada tarefa, excluindo o usuário logado
+    tarefas_com_participantes = []
+    for tarefa in tarefas_em_grupo:
+        participantes = tarefa.participantes.exclude(usuario=usuario).exclude(usuario=tarefa.usuario)
+        tarefa_info = {
+            'tarefa': tarefa,
+            'envolvidos': [tarefa.usuario] if tarefa.usuario != usuario else [],
+            'participantes': participantes
+        }
+        tarefas_com_participantes.append(tarefa_info)
+
+    return render(request, 'menu/tarefas_em_grupo.html', {'tarefas': tarefas_com_participantes})
 
 @login_required
 def chat_view(request, user_id):
@@ -164,14 +187,22 @@ def send_message(request):
         recipient_id = data.get('recipient_id')
         content = data.get('content')
 
+        # Verifique se os dados são válidos
+        if not recipient_id or not content:
+            return JsonResponse({'status': 'Dados inválidos'}, status=400)
+
         try:
+            # Exemplo básico de envio de mensagem
             recipient = User.objects.get(id=recipient_id)
-            message = Message.objects.create(sender=request.user, recipient=recipient, content=content)
+            # Suponha que exista um modelo Message
+            Message.objects.create(sender=request.user, recipient=recipient, content=content)
             return JsonResponse({'status': 'Message sent!'})
         except User.DoesNotExist:
-            return JsonResponse({'status': 'Recipient not found.'}, status=404)
+            return JsonResponse({'status': 'Usuário não encontrado'}, status=404)
+        except Exception as e:
+            return JsonResponse({'status': f'Erro: {str(e)}'}, status=500)
 
-    return JsonResponse({'status': 'Invalid request'}, status=400)
+    return JsonResponse({'status': 'Método inválido'}, status=405)
 
 
     

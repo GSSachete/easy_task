@@ -20,27 +20,39 @@
     <section class="content">
         <h2>Tarefas em Grupo</h2>
         <div class="quadro-container">
-            {% for tarefa in tarefas %}
+            {% for item in tarefas %}
                 <div class="quadro-card 
-                    {% if tarefa.prioridade == 'urgente' %}urgente{% endif %}
-                    {% if tarefa.prioridade == 'proximo' %}proximo{% endif %}
-                    {% if tarefa.prioridade == 'distante' %}distante{% endif %}
-                ">
-                    <h3 class="quadro-title">{{ tarefa.titulo }}</h3>
-                    <p class="quadro-description">{{ tarefa.descricao }}</p>
-                    <span class="quadro-prioridade">Prioridade: {{ tarefa.get_prioridade_display }}</span>
-
-                    <!-- Exibe o criador da tarefa -->
-                    <p><strong>Criador:</strong> {{ tarefa.usuario.username }}</p>
-
-                    <!-- Exibe os participantes -->
-                    <p class="quadro-participantes">
-                        <strong>Participantes:</strong>
-                        {% for participante in tarefa.participantes.all %}
-                            {{ participante.usuario }}{% if not forloop.last %}, {% endif %}
-                        {% endfor %}
-                    </p>
-                </div>
+                {% if item.tarefa.prioridade == 'urgente' %}urgente{% endif %}
+                {% if item.tarefa.prioridade == 'proximo' %}proximo{% endif %}
+                {% if item.tarefa.prioridade == 'distante' %}distante{% endif %}
+            ">
+                <h3 class="quadro-title">{{ item.tarefa.titulo }}</h3>
+                <p class="quadro-categoria">{{ item.tarefa.categoria }}</p>
+                <p class="quadro-description">{{ item.tarefa.descricao }}</p>
+              
+                <!-- Exibe as pessoas envolvidas no quadro, exceto o usuário logado -->
+                <p class="quadro-envolvidos">
+                    <strong>Participantes: </strong>
+                    {% for envolvido in item.envolvidos %}
+                        {{ envolvido.username }}{% if not forloop.last or item.participantes.count > 0 %}, {% endif %}
+                    {% endfor %}
+                    {% for participante in item.participantes %}
+                        {{ participante.usuario }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+              
+                <!-- Ajuste para garantir que o ícone fique dentro do contêiner do quadro -->
+                {% if item.tarefa.arquivo %}
+                    <div class="quadro-arquivos" style="margin-top: 10px; display: flex; justify-content: center;">
+                        <a href="{{ item.tarefa.arquivo.url }}" download="{{ item.tarefa.arquivo.name }}" class="download-link">
+                            <!-- Ícone de pasta em SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M10 4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6z"></path>
+                            </svg>
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
             {% empty %}
                 <p class="no-quadros">Nenhuma tarefa em grupo ainda.</p>
             {% endfor %}
