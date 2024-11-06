@@ -9,16 +9,19 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from .models import Tarefa
 from login.models import Usuario
+from .models import Message
+
 
 
 @login_required
 def menu(request):
     prioridade_ordem = {'urgente': 1, 'proximo': 2, 'distante': 3}
-    
     quadros = Tarefa.objects.filter(usuario=request.user, concluida=False).all()
     quadros = sorted(quadros, key=lambda x: prioridade_ordem.get(x.prioridade, 4))
     
-    return render(request, 'menu/menu.html', {'quadros': quadros})
+    users = User.objects.exclude(id=request.user.id)  
+    
+    return render(request, 'menu/menu.html', {'quadros': quadros, 'users': users})
 
 
 
@@ -144,3 +147,31 @@ def tarefas_em_grupo(request):
     tarefas_em_grupo = tarefas_em_grupo.distinct()
 
     return render(request, 'menu/tarefas_em_grupo.html', {'tarefas': tarefas_em_grupo})
+
+@login_required
+def chat_view(request, user_id):
+    recipient = User.objects.get(id=user_id)
+    messages = Message.objects.filter(
+        (models.Q(sender=request.user) & models.Q(recipient=recipient)) |
+        (models.Q(sender=recipient) & models.Q(recipient=request.user))
+    ).order_by('timestamp')
+    return render(request, 'chat/chat.html', {'messages': messages, 'recipient': recipient})
+
+@login_required
+def send_message(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        recipient_id = data.get('recipient_id')
+        content = data.get('content')
+
+        try:
+            recipient = User.objects.get(id=recipient_id)
+            message = Message.objects.create(sender=request.user, recipient=recipient, content=content)
+            return JsonResponse({'status': 'Message sent!'})
+        except User.DoesNotExist:
+            return JsonResponse({'status': 'Recipient not found.'}, status=404)
+
+    return JsonResponse({'status': 'Invalid request'}, status=400)
+
+
+    

@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu de Tarefas</title>
     <link rel="stylesheet" href="{% static 'css/menu.css' %}">
-
     <link rel="stylesheet" href="{% static 'css/chat.css' %}">
 </head>
 <body>
+    <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-left">
             <h1>BZZ TASK</h1>
@@ -18,11 +18,12 @@
             <span class="user-icon">👤</span>
             <span class="username">{{ user.username }}</span>
             <a href="{% url 'tarefas_em_grupo' %}" class="grupo-link">Tarefas em Grupo</a>
-            <a href="{% url 'concluidos' %}" class="concluidos-link">Concluídos</a> 
+            <a href="{% url 'concluidos' %}" class="concluidos-link">Concluídos</a>
             <a href="{% url 'logout' %}" class="logout-link">Sair</a>
         </div>
     </nav>
-    
+
+    <!-- Exibe mensagens do sistema, se houver -->
     {% if messages %}
         <div class="message-container">
             {% for message in messages %}
@@ -31,9 +32,9 @@
         </div>
     {% endif %}
 
+    <!-- Conteúdo Principal -->
     <section class="content">
         <h2>Quadros Criados</h2>
-
         <div class="quadro-container">
             {% for quadro in quadros %}
                 <div class="quadro-card 
@@ -84,16 +85,49 @@
             <button class="add-quadro-button" onclick="window.location.href='{% url 'adicionar_quadro' %}';">+ Novo Quadro</button>
         </div>
     </section>
-    <div id="chat-widget" class="chat-widget">
+
+    <!-- Chat Widget -->
+    <div id="chat-widget" class="chat-widget" style="display: none;">
         <div class="chat-header">
             <h4>Chat</h4>
             <button id="close-chat">✕</button>
         </div>
-        <div id="chat-log" class="chat-log"></div>
-        <input id="chat-message-input" type="text" placeholder="Digite sua mensagem...">
-        <button id="chat-message-send">Enviar</button>
+
+        <!-- Lista de conversas recentes -->
+        <div id="conversation-list" class="conversation-list">
+            <h5>Conversas</h5>
+            <ul id="conversation-items">
+                {% for conversation in conversations %}
+                    <li class="conversation-item" data-recipient-id="{{ conversation.recipient.id }}">
+                        {{ conversation.recipient.username }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Botão de "+" para iniciar uma nova conversa -->
+        <button id="add-user" class="add-user">+</button>
+
+        <!-- Selecionar destinatário para nova conversa -->
+        <div id="recipient-container" class="recipient-container" style="display: none;">
+            <label for="recipient-select">Destinatário:</label>
+            <select id="recipient-select">
+                <option value="" disabled selected>Selecione um destinatário</option>
+                {% for user in users %}
+                    <option value="{{ user.id }}">{{ user.username }}</option>
+                {% endfor %}
+            </select>
+            <button id="start-conversation">Iniciar</button>
+        </div>
+
+        <!-- Entrada de mensagem -->
+        <div class="message-input-container">
+            <input id="chat-message-input" type="text" placeholder="Digite sua mensagem...">
+            <button id="chat-message-send" class="send-button">Enviar</button>
+        </div>
     </div>
 
+    <!-- Botão para abrir o chat -->
     <button id="open-chat" class="open-chat">Chat</button>
 
     <script src="{% static 'js/chat.js' %}"></script>

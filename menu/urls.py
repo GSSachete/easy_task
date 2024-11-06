@@ -9,4 +9,6 @@ urlpatterns = [
     path('concluir_tarefa/<int:quadro_id>/', views.concluir_tarefa, name='concluir_tarefa'),
     path('concluidos/', views.concluidos, name='concluidos'),
     path('tarefas_em_grupo/', views.tarefas_em_grupo, name='tarefas_em_grupo'),
+    path('chat/<int:user_id>/', views.chat_view, name='chat_view'),
+    path('send_message/', views.send_message, name='send_message'),
 ]
