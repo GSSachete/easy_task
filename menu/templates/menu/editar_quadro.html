@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Quadro</title>
-    <link rel="stylesheet" href="{% static 'css/menu.css' %}">
+    <link rel="stylesheet" href="{% static 'css/editquadro.css' %}">
 </head>
 <body>
     <nav class="navbar">
@@ -28,7 +28,10 @@
             <div class="quadro-arquivos">
                 <a href="{{ quadro.arquivo.url }}" download="{{ quadro.arquivo.name }}" class="download-link">
                     <!-- Ícone de pasta em SVG -->
-                    
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M10 4H2v16h20V8H12l-2-4z" fill="#333"/>
+                    </svg>
+                    Baixar Arquivo
                 </a>
             </div>
         {% endif %}

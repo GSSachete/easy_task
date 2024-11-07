@@ -205,4 +205,6 @@ def send_message(request):
     return JsonResponse({'status': 'Método inválido'}, status=405)
 
 
+
+
     

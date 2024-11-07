@@ -1,152 +1,151 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu de Tarefas</title>
-    <link rel="stylesheet" href="{% static 'css/menu.css' %}">
-    <link rel="stylesheet" href="{% static 'css/chat.css' %}">
-</head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="navbar-left">
-            <h1>BZZ TASK</h1>
-        </div>
-        <div class="navbar-right">
-            <span class="user-icon">👤</span>
-            <span class="username">{{ user.username }}</span>
-            <a href="{% url 'tarefas_em_grupo' %}" class="grupo-link">Tarefas em Grupo</a>
-            <a href="{% url 'concluidos' %}" class="concluidos-link">Concluídos</a>
-            <a href="{% url 'logout' %}" class="logout-link">Sair</a>
-        </div>
-    </nav>
+    {% load static %}
+    <!DOCTYPE html>
+    <html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Menu de Tarefas</title>
+        <link rel="stylesheet" href="{% static 'css/menu.css' %}">
+        <link rel="stylesheet" href="{% static 'css/chat.css' %}">
+    </head>
+    <body>
+        <nav class="navbar">
+            <div class="navbar-left">
+                <h1>BZZ TASK - Menu</h1>
+                <div class="links-container">
+                    <a href="{% url 'tarefas_em_grupo' %}" class="grupo-link">Tarefas em Grupo</a>
+                    <a href="{% url 'concluidos' %}" class="concluidos-link">Concluídos</a>
+                </div>
+            </div>
+            <div class="navbar-right">
+                <span class="user-icon">👤</span>
+                <span class="username">{{ user.username }}</span>
+                <a href="{% url 'logout' %}" class="logout-link">Sair</a>
+            </div>
+        </nav>
 
-    <!-- Exibe mensagens do sistema, se houver -->
-    {% if messages %}
-        <div class="message-container">
-            {% for message in messages %}
-                <div class="message">{{ message }}</div>
-            {% endfor %}
-        </div>
-    {% endif %}
+        {% if messages %}
+            <div class="message-container">
+                {% for message in messages %}
+                    <div class="message">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
 
-    <!-- Conteúdo Principal -->
-    <section class="content">
-        <h2>Quadros Criados</h2>
-        <div class="quadro-container">
-            {% for quadro in quadros %}
-                <div class="quadro-card 
-                    {% if quadro.prioridade == 'urgente' %}urgente
-                    {% elif quadro.prioridade == 'proximo' %}proximo
-                    {% elif quadro.prioridade == 'distante' %}distante
-                    {% endif %}">
-                    <h3 class="quadro-title">{{ quadro.titulo }}</h3>
-                    <p class="quadro-categoria">{{ quadro.categoria }}</p>
-                    <p class="quadro-description">{{ quadro.descricao }}</p>
+        <section class="content">
+            <h2>Quadros Criados</h2>
+            <div class="quadro-container">
+                {% for quadro in quadros %}
+                    <div class="quadro-card 
+                        {% if quadro.prioridade == 'urgente' %}urgente
+                        {% elif quadro.prioridade == 'proximo' %}proximo
+                        {% elif quadro.prioridade == 'distante' %}distante
+                        {% endif %}">
+                        <h3 class="quadro-title">{{ quadro.titulo }}</h3>
+                        <p class="quadro-categoria">{{ quadro.categoria }}</p>
+                        <p class="quadro-description">{{ quadro.descricao }}</p>
 
-                    <!-- Exibe os participantes se a tarefa for em grupo -->
-                    {% if quadro.participantes.exists %}
-                        <p class="quadro-participantes">
-                            <strong>Participantes:</strong>
-                            {% for participante in quadro.participantes.all %}
-                                {{ participante.usuario }}{% if not forloop.last %}, {% endif %}
-                            {% endfor %}
-                        </p>
-                    {% else %}
-                        <p class="quadro-participantes"><strong>Participantes:</strong> Você</p>
-                    {% endif %}
+                        <!-- Exibe os participantes se a tarefa for em grupo -->
+                        {% if quadro.participantes.exists %}
+                            <p class="quadro-participantes">
+                                <strong>Participantes:</strong>
+                                {% for participante in quadro.participantes.all %}
+                                    {{ participante.usuario }}{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </p>
+                        {% else %}
+                            <p class="quadro-participantes"><strong>Participantes:</strong> Você</p>
+                        {% endif %}
 
-                    <!-- Ajustando a exibição do arquivo anexado -->
-                    <div class="quadro-arquivos">
-                        {% if quadro.arquivo %}
-                            <a href="{{ quadro.arquivo.url }}" download="{{ quadro.arquivo.name }}" class="download-link">
-                                <!-- Ícone de pasta em SVG -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M10 4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6z"></path>
+                        <!-- Ajustando a exibição do arquivo anexado -->
+                        <div class="quadro-arquivos">
+                            {% if quadro.arquivo %}
+                                <a href="{{ quadro.arquivo.url }}" download="{{ quadro.arquivo.name }}" class="download-link">
+                                    <!-- Ícone de pasta em SVG -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M10 4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6z"></path>
+                                    </svg>
+                                </a>
+                            {% endif %}
+                        </div>
+                        
+
+                        <div class="quadro-actions">
+                            <a href="{% url 'editar_quadro' quadro.id %}" class="edit-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FFA500" viewBox="0 0 24 24">
+                                    <path d="M3 17.25V21h3.75l11.06-11.06-3.75-3.75L3 17.25zm3.25-1.5L14.75 7 17 9.25l-8.5 8.5H6v-1.5z"/>
                                 </svg>
                             </a>
-                        {% endif %}
+                            <a href="{% url 'excluir_quadro' quadro.id %}" onclick="return confirm('Tem certeza que deseja excluir esta tarefa?');" class="delete-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FF0000" viewBox="0 0 24 24">
+                                    <path d="M3 6l3 18h12l3-18h-18zm5 15h-2v-12h2v12zm6 0h-2v-12h2v12zm4-12h2v12h-2v-12zm-9-4v-3h6v3h9v2h-24v-2h9z"/>
+                                </svg>
+                            </a>
+                            <a href="{% url 'concluir_tarefa' quadro.id %}" onclick="return confirm('Tem certeza que deseja concluir esta tarefa?');" class="check-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#4CAF50" viewBox="0 0 24 24">
+                                    <path d="M9 16.2l-3.5-3.5L4 14l5 5 12-12-1.5-1.5L9 16.2z"/>
+                                </svg>
+                            </a>
+                        </div>
                     </div>
-                    
-
-                    <div class="quadro-actions">
-                        <a href="{% url 'editar_quadro' quadro.id %}" class="edit-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FFA500" viewBox="0 0 24 24">
-                                <path d="M3 17.25V21h3.75l11.06-11.06-3.75-3.75L3 17.25zm3.25-1.5L14.75 7 17 9.25l-8.5 8.5H6v-1.5z"/>
-                            </svg>
-                        </a>
-                        <a href="{% url 'excluir_quadro' quadro.id %}" onclick="return confirm('Tem certeza que deseja excluir esta tarefa?');" class="delete-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FF0000" viewBox="0 0 24 24">
-                                <path d="M3 6l3 18h12l3-18h-18zm5 15h-2v-12h2v12zm6 0h-2v-12h2v12zm4-12h2v12h-2v-12zm-9-4v-3h6v3h9v2h-24v-2h9z"/>
-                            </svg>
-                        </a>
-                        <a href="{% url 'concluir_tarefa' quadro.id %}" onclick="return confirm('Tem certeza que deseja concluir esta tarefa?');" class="check-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#4CAF50" viewBox="0 0 24 24">
-                                <path d="M9 16.2l-3.5-3.5L4 14l5 5 12-12-1.5-1.5L9 16.2z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            {% empty %}
-                <p class="no-quadros">Nenhum quadro criado ainda.</p>
-            {% endfor %}
-        </div>
-
-        <div class="button-container">
-            <button class="add-quadro-button" onclick="window.location.href='{% url 'adicionar_quadro' %}';">+ Novo Quadro</button>
-        </div>
-    </section>
-
-    <!-- Chat Widget -->
-    <div id="chat-widget" class="chat-widget" style="display: none;">
-        <div class="chat-header">
-            <h4>Chat</h4>
-            <button id="close-chat">✕</button>
-        </div>
-
-        <!-- Lista de conversas recentes -->
-        <div id="conversation-list" class="conversation-list">
-            <h5>Conversas</h5>
-            <ul id="conversation-items">
-                {% for conversation in conversations %}
-                    <li class="conversation-item" data-recipient-id="{{ conversation.recipient.id }}">
-                        {{ conversation.recipient.username }}
-                    </li>
+                {% empty %}
+                    <p class="no-quadros">Nenhum quadro criado ainda.</p>
                 {% endfor %}
-            </ul>
+            </div>
+
+            <div class="button-container">
+                <button class="add-quadro-button" onclick="window.location.href='{% url 'adicionar_quadro' %}';">+ Novo Quadro</button>
+            </div>
+        </section>
+
+        <!-- Chat Widget -->
+        <div id="chat-widget" class="chat-widget" style="display: none;">
+            <div class="chat-header">
+                <h4>Chat</h4>
+                <button id="close-chat">✕</button>
+            </div>
+
+            <!-- Lista de conversas recentes -->
+            <div id="conversation-list" class="conversation-list">
+                <h5>Conversas</h5>
+                <ul id="conversation-items">
+                    {% for conversation in conversations %}
+                        <li class="conversation-item" data-recipient-id="{{ conversation.recipient.id }}">
+                            {{ conversation.recipient.username }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Botão de "+" para iniciar uma nova conversa -->
+            <button id="add-user" class="add-user">+</button>
+
+            <!-- Selecionar destinatário para nova conversa -->
+            <div id="recipient-container" class="recipient-container" style="display: none;">
+                <label for="recipient-select">Destinatário:</label>
+                <select id="recipient-select">
+                    <option value="" disabled selected>Selecione um destinatário</option>
+                    {% for user in users %}
+                        <option value="{{ user.id }}">{{ user.username }}</option>
+                    {% endfor %}
+                </select>
+                <button id="start-conversation">Iniciar</button>
+            </div>
+
+            <!-- Entrada de mensagem -->
+            <div class="message-input-container">
+                <label for="chat-message-input">Mensagem:</label> <!-- Adicionando um label semelhante -->
+                <input id="chat-message-input" type="text" placeholder="Digite sua mensagem...">
+                <button id="chat-message-send" class="send-button">Enviar</button>
+            </div>
         </div>
 
-        <!-- Botão de "+" para iniciar uma nova conversa -->
-        <button id="add-user" class="add-user">+</button>
+        <!-- Botão para abrir o chat -->
+        <button id="open-chat" class="open-chat">Chat</button>
 
-        <!-- Selecionar destinatário para nova conversa -->
-        <div id="recipient-container" class="recipient-container" style="display: none;">
-            <label for="recipient-select">Destinatário:</label>
-            <select id="recipient-select">
-                <option value="" disabled selected>Selecione um destinatário</option>
-                {% for user in users %}
-                    <option value="{{ user.id }}">{{ user.username }}</option>
-                {% endfor %}
-            </select>
-            <button id="start-conversation">Iniciar</button>
-        </div>
-
-        <!-- Entrada de mensagem -->
-        <div class="message-input-container">
-            <label for="chat-message-input">Mensagem:</label> <!-- Adicionando um label semelhante -->
-            <input id="chat-message-input" type="text" placeholder="Digite sua mensagem...">
-            <button id="chat-message-send" class="send-button">Enviar</button>
-        </div>
-    </div>
-
-    <!-- Botão para abrir o chat -->
-    <button id="open-chat" class="open-chat">Chat</button>
-
-    <script src="{% static 'js/chat.js' %}"></script>
-    <footer class="footer">
-        <p>&copy; 2024 BZZ TASK. Todos os direitos reservados. 🐝</p>
-    </footer>
-</body>
-</html>
+        <script src="{% static 'js/chat.js' %}"></script>
+        <footer class="footer">
+            <p>&copy; 2024 BZZ TASK. Todos os direitos reservados. 🐝</p>
+        </footer>
+    </body>
+    </html>

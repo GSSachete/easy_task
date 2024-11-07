@@ -1,6 +1,6 @@
 /* Fundo amarelo claro para a página */
 body {
-    background-color: #ffec3d; /* Novo fundo */
+    background-color: #ffec3d;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -12,13 +12,13 @@ body {
 /* Navbar verde */
 .navbar {
     display: flex;
-    justify-content: center; /* Centraliza o título */
+    justify-content: center; /* Centraliza o conteúdo na horizontal */
     align-items: center;
     background-color: #00FF00;
     width: 100%;
     padding: 20px;
     margin-bottom: 20px;
-    position: relative; /* Permite posicionamento absoluto dos elementos */
+    position: relative; /* Permite posicionar outros elementos */
 }
 
 .navbar h1 {
@@ -45,11 +45,11 @@ body {
 .content {
     width: 90%;
     max-width: 500px;
-    background-color: #ffcc66; /* Novo fundo do formulário */
+    background-color: #ffcc66;
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    border: 5px solid #FFD700; /* Borda dourada */
+    border: 5px solid #FFD700;
     margin-bottom: 20px;
 }
 
@@ -68,24 +68,12 @@ form label {
 
 form input[type="text"],
 form textarea,
-form select {
-    padding: 10px;
-    font-size: 1.1em;
-    border: 2px solid #00FF00; /* Borda verde */
-    border-radius: 10px;
-    margin-bottom: 15px;
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
-}
-
-form input[type="text"],
-form textarea,
 form select,
 form input[type="file"] {
     padding: 10px;
     font-size: 1.1em;
-    background-color: #d1ff00; /* Nova cor de fundo */
-    border: 2px solid #00FF00; /* Borda verde */
+    background-color: #d1ff00;
+    border: 2px solid #00FF00;
     border-radius: 10px;
     margin-bottom: 15px;
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
@@ -96,8 +84,13 @@ form input[type="text"]:focus,
 form textarea:focus,
 form select:focus,
 form input[type="file"]:focus {
-    transform: scale(1.05); /* Efeito de zoom ao focar */
+    transform: scale(1.05);
     border-color: #00FF00; 
+}
+
+form textarea {
+    resize: vertical;
+    min-height: 100px;
 }
 
 /* Botão de envio */
@@ -106,7 +99,7 @@ form input[type="file"]:focus {
     font-size: 1.2em;
     font-weight: bold;
     color: #FFF;
-    background-color: #00FF00; 
+    background-color: #d1ff00;
     border: none;
     border-radius: 10px;
     cursor: pointer;
@@ -116,15 +109,17 @@ form input[type="file"]:focus {
 }
 
 .submit-button:hover {
-    background-color: #00FF00; 
-    transform: scale(1.1); /* Aumenta o botão ao passar o mouse */
+    background-color: #c7e600;
+    transform: scale(1.1);
 }
 
-/* Texto de ajuda para participantes */
-.help-text {
-    font-size: 0.9em;
-    color: #666;
-    margin-top: -10px;
-    margin-bottom: 10px;
-    font-style: italic;
+/* Links de download */
+.quadro-arquivos {
+    margin-top: 20px;
 }
+
+.quadro-arquivos .download-link {
+    display: inline-flex;
+    align-items: center;
+    color: #333;
+    text

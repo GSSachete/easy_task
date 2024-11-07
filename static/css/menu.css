@@ -17,6 +17,78 @@ body {
     padding: 10px 20px;
 }
 
+/* Navbar à esquerda (BZZ TASK e os links) */
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-left h1 {
+    margin-right: 20px;
+    color: #333;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+/* Container para os links ao lado de BZZ TASK */
+.links-container {
+    display: flex;
+    gap: 15px; /* Espaçamento entre os links */
+}
+
+/* Links da navbar à esquerda */
+.navbar-left .grupo-link,
+.navbar-left .concluidos-link {
+    text-decoration: none;
+    color: #333;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.navbar-left .grupo-link:hover,
+.navbar-left .concluidos-link:hover {
+    color: #666;
+}
+
+/* Navbar à direita (usuário e botão de sair) */
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-right .user-icon {
+    margin-right: 10px;
+}
+
+.navbar-right .username {
+    margin-right: 15px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333;
+}
+
+.navbar-right .logout-link {
+    text-decoration: none;
+    font-size: 1.1em;
+    color: #333;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+
+.navbar-right .logout-link:hover {
+    color: #666;
+}
+.navbar .back-link {
+    position: absolute; /* Posiciona o link de "Voltar ao Menu" */
+    right: 20px; /* Afasta o link da borda direita */
+    color: #333;
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
 .content h2 {
     font-size: 2em;
     font-weight: bold;
