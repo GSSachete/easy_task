@@ -20,6 +20,12 @@
 
     <section class="content">
         <h2>Tarefas Concluídas</h2>
+
+        <form method="GET" action="{% url 'concluidos' %}" class="filter-form">
+            <input type="text" name="busca_titulo" placeholder="Buscar por título..." value="{{ busca_titulo }}" class="filter-input">
+            <button type="submit" class="filter-button">Buscar</button>
+        </form>
+
         <div class="quadro-container">
             {% for tarefa in tarefas_concluidas %}
                 <div class="quadro-card concluido">

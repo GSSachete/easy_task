@@ -16,12 +16,26 @@ from .models import Message
 @login_required
 def menu(request):
     prioridade_ordem = {'urgente': 1, 'proximo': 2, 'distante': 3}
-    quadros = Tarefa.objects.filter(usuario=request.user, concluida=False).all()
+    busca_titulo = request.GET.get('busca_titulo', '')
+    filtro_prioridade = request.GET.get('filtro_prioridade', '')
+
+    # Filtra quadros pertencentes ao usuário
+    quadros = Tarefa.objects.filter(usuario=request.user, concluida=False)
+
+    # Filtro de busca por título
+    if busca_titulo:
+        quadros = quadros.filter(titulo__icontains=busca_titulo)
+
+    # Filtro por prioridade
+    if filtro_prioridade:
+        quadros = quadros.filter(prioridade=filtro_prioridade)
+
+    # Ordena quadros pela prioridade
     quadros = sorted(quadros, key=lambda x: prioridade_ordem.get(x.prioridade, 4))
-    
+
     users = User.objects.exclude(id=request.user.id)  
-    
-    return render(request, 'menu/menu.html', {'quadros': quadros, 'users': users})
+
+    return render(request, 'menu/menu.html', {'quadros': quadros, 'users': users, 'busca_titulo': busca_titulo, 'filtro_prioridade': filtro_prioridade})
 
 
 
@@ -108,27 +122,37 @@ def excluir_quadro(request, quadro_id):
 
 @login_required
 def concluidos(request):
-    # Tenta obter a instância de Usuario associada ao usuário logado
+    busca_titulo = request.GET.get('busca_titulo', '')
+    filtro_prioridade = request.GET.get('filtro_prioridade', '')
+
     try:
         usuario_instancia = Usuario.objects.get(user=request.user)
     except Usuario.DoesNotExist:
         messages.error(request, "Você não possui um perfil de usuário registrado.")
         return redirect('menu')
 
-    # Filtra as tarefas concluídas onde o usuário logado (request.user) é o criador
-    # ou onde o usuario_instancia está nos participantes
     tarefas_concluidas = Tarefa.objects.filter(
         concluida=True,
-        usuario=request.user  # Usa request.user (instância de User)
+        usuario=request.user
     ) | Tarefa.objects.filter(
         concluida=True,
-        participantes=usuario_instancia  # Usa usuario_instancia (instância de Usuario)
+        participantes=usuario_instancia
     )
 
-    # Remove duplicatas caso o usuário seja tanto criador quanto participante
+    # Aplicando filtros de busca e prioridade
+    if busca_titulo:
+        tarefas_concluidas = tarefas_concluidas.filter(titulo__icontains=busca_titulo)
+
+    if filtro_prioridade:
+        tarefas_concluidas = tarefas_concluidas.filter(prioridade=filtro_prioridade)
+
     tarefas_concluidas = tarefas_concluidas.distinct()
 
-    return render(request, 'menu/concluidos.html', {'tarefas_concluidas': tarefas_concluidas})
+    return render(request, 'menu/concluidos.html', {
+        'tarefas_concluidas': tarefas_concluidas,
+        'busca_titulo': busca_titulo,
+        'filtro_prioridade': filtro_prioridade
+    })
 
 @login_required
 def concluir_tarefa(request, quadro_id):
@@ -145,9 +169,10 @@ def adicionar_participante(tarefa, nome_usuario):
 
 @login_required
 def tarefas_em_grupo(request):
-    usuario = request.user
+    busca_titulo = request.GET.get('busca_titulo', '')
+    filtro_prioridade = request.GET.get('filtro_prioridade', '')
 
-    # Obtém as tarefas em grupo relacionadas ao usuário
+    usuario = request.user
     tarefas_em_grupo = Tarefa.objects.filter(
         participantes__user=usuario,
         concluida=False
@@ -156,9 +181,16 @@ def tarefas_em_grupo(request):
         participantes__isnull=False,
         concluida=False
     )
+
+    # Aplicando filtros de busca e prioridade
+    if busca_titulo:
+        tarefas_em_grupo = tarefas_em_grupo.filter(titulo__icontains=busca_titulo)
+
+    if filtro_prioridade:
+        tarefas_em_grupo = tarefas_em_grupo.filter(prioridade=filtro_prioridade)
+
     tarefas_em_grupo = tarefas_em_grupo.distinct()
 
-    # Filtra as pessoas envolvidas em cada tarefa, excluindo o usuário logado
     tarefas_com_participantes = []
     for tarefa in tarefas_em_grupo:
         participantes = tarefa.participantes.exclude(usuario=usuario).exclude(usuario=tarefa.usuario)
@@ -169,7 +201,11 @@ def tarefas_em_grupo(request):
         }
         tarefas_com_participantes.append(tarefa_info)
 
-    return render(request, 'menu/tarefas_em_grupo.html', {'tarefas': tarefas_com_participantes})
+    return render(request, 'menu/tarefas_em_grupo.html', {
+        'tarefas': tarefas_com_participantes,
+        'busca_titulo': busca_titulo,
+        'filtro_prioridade': filtro_prioridade
+    })
 
 @login_required
 def chat_view(request, user_id):

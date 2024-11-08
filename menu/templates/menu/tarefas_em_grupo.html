@@ -19,6 +19,18 @@
 
     <section class="content">
         <h2>Tarefas em Grupo</h2>
+
+        <form method="GET" action="{% url 'tarefas_em_grupo' %}" class="filter-form">
+            <input type="text" name="busca_titulo" placeholder="Buscar por título..." value="{{ busca_titulo }}" class="filter-input">
+            <select name="filtro_prioridade" class="filter-select">
+                <option value="">-- Filtrar por Prioridade --</option>
+                <option value="urgente" {% if filtro_prioridade == 'urgente' %}selected{% endif %}>Urgente</option>
+                <option value="proximo" {% if filtro_prioridade == 'proximo' %}selected{% endif %}>Próximo</option>
+                <option value="distante" {% if filtro_prioridade == 'distante' %}selected{% endif %}>Distante</option>
+            </select>
+            <button type="submit" class="filter-button">Filtrar</button>
+        </form>
+        
         <div class="quadro-container">
             {% for item in tarefas %}
                 <div class="quadro-card 
