@@ -1,0 +1,55 @@
+.filter-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+    width: 100%;
+}
+
+.filter-input {
+    padding: 10px;
+    border: 2px solid #FFD700; /* Amarelo brilhante */
+    border-radius: 25px; /* Borda arredondada */
+    font-size: 1em;
+    width: 200px;
+    transition: box-shadow 0.3s;
+    background-color: #FFFBEA; /* Fundo suave */
+}
+
+.filter-input:focus {
+    outline: none;
+    box-shadow: 0px 0px 10px 2px rgba(255, 215, 0, 0.6); /* Efeito de foco com sombra */
+}
+
+.filter-select {
+    padding: 10px;
+    border: 2px solid #FF69B4; /* Rosa vibrante */
+    border-radius: 25px; /* Borda arredondada */
+    font-size: 1em;
+    background-color: #FFF0F5; /* Fundo suave */
+    cursor: pointer;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.filter-select:hover {
+    border-color: #FF1493; /* Muda para rosa mais escuro no hover */
+    background-color: #FFE4E1; /* Cor de fundo ao passar o mouse */
+}
+
+.filter-button {
+    padding: 12px 24px;
+    font-size: 1.2em;
+    color: #FFF;
+    background-color: #32CD32; /* Verde limão */
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    font-weight: bold;
+}
+
+.filter-button:hover {
+    background-color: #228B22; /* Verde mais escuro no hover */
+    transform: translateY(-3px);
+}
