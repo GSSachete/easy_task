@@ -105,12 +105,15 @@ body {
 .quadro-container {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center; /* Centraliza os quadros horizontalmente */
+    align-items: flex-start; /* Alinha os quadros ao topo */
     gap: 1.5rem;
-    justify-content: center;
-    width: 100%;
-    max-width: 900px;
     margin-top: 20px;
+    width: 100%;
+    max-width: 2000px; /* Aumente o valor conforme necessário */
 }
+
+
 
 .quadro-card {
     background-color: #fff;
