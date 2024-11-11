@@ -17,7 +17,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #00FF00;
+    background-color: #ffcc66;
     width: 100%;
     padding: 10px 20px;
 }
@@ -229,7 +229,7 @@ body {
 
 .footer {
     width: 100%;
-    background-color: #00FF00;
+    background-color: #ffcc66;
     text-align: center;
     padding: 10px;
     font-weight: bold;

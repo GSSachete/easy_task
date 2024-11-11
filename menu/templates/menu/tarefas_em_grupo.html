@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tarefas em Grupo</title>
     <link rel="stylesheet" href="{% static 'css/menu.css' %}">
+    <link rel="stylesheet" href="{% static 'css/busca.css' %}">
 </head>
 <body>
     <nav class="navbar">
@@ -20,7 +21,7 @@
     <section class="content">
         <h2>Tarefas em Grupo</h2>
 
-        <form method="GET" action="{% url 'tarefas_em_grupo' %}" class="filter-form">
+        <form method="GET" action="{% url 'menu' %}" class="filter-form">
             <input type="text" name="busca_titulo" placeholder="Buscar por título..." value="{{ busca_titulo }}" class="filter-input">
             <select name="filtro_prioridade" class="filter-select">
                 <option value="">-- Filtrar por Prioridade --</option>
