@@ -20,8 +20,8 @@ class RegisterForm(UserCreationForm):
         ('7', 'Doutorado'),
     ]
     
-    username = forms.CharField(max_length=100)  # Nome de usuário para login
-    nome = forms.CharField(max_length=100)      # Nome completo do usuário
+    username = forms.CharField(max_length=100)  
+    nome = forms.CharField(max_length=100)     
     escolaridade = forms.ChoiceField(choices=NIVEIS_ESCOLARIDADE)
     data_nascimento = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
     escola = forms.CharField(max_length=100)
@@ -34,7 +34,7 @@ class RegisterForm(UserCreationForm):
     def save(self, commit=True):
         user = super(RegisterForm, self).save(commit=False)
         user.email = self.cleaned_data['email']
-        user.set_password(self.cleaned_data['password1'])  # Define a senha corretamente
+        user.set_password(self.cleaned_data['password1'])  
         if commit:
             user.save()
             Usuario.objects.create(

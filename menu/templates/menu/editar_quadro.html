@@ -14,20 +14,20 @@
     </nav>
 
     <section class="content">
-        <form method="post" enctype="multipart/form-data"> <!-- Adicionado enctype para upload de arquivos -->
+        <form method="post" enctype="multipart/form-data"> 
             {% csrf_token %}
             {{ form.as_p }}
-            <!-- Campo para selecionar um novo arquivo -->
+          
             <label for="arquivo">Anexar Novo Arquivo:</label>
             <input type="file" id="arquivo" name="arquivo">
             <button type="submit" class="submit-button">Salvar Alterações</button>
         </form>
 
-        <!-- Exibe o arquivo atual se houver -->
+     
         {% if quadro.arquivo %}
             <div class="quadro-arquivos">
                 <a href="{{ quadro.arquivo.url }}" download="{{ quadro.arquivo.name }}" class="download-link">
-                    <!-- Ícone de pasta em SVG -->
+                  
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <path d="M10 4H2v16h20V8H12l-2-4z" fill="#333"/>
                     </svg>

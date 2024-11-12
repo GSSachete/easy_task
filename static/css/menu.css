@@ -26,6 +26,7 @@ body {
 .navbar-left {
     display: flex;
     align-items: center;
+    margin-left: 2.5%;
 }
 
 .navbar-left h1 {
@@ -60,6 +61,7 @@ body {
 .navbar-right {
     display: flex;
     align-items: center;
+    margin-right: 2.5%;
 }
 
 .navbar-right .user-icon {

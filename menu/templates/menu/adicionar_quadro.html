@@ -14,10 +14,10 @@
     </nav>
 
     <section class="content">
-        <form method="post" enctype="multipart/form-data"> <!-- Adicionado enctype para permitir upload de arquivos -->
+        <form method="post" enctype="multipart/form-data"> 
             {% csrf_token %}
             {{ form.as_p }}
-            <!-- Campo para anexar arquivos -->
+            
             <label for="arquivo">Anexar Arquivos:</label>
             <input type="file" id="arquivo" name="arquivo" multiple>
             <button type="submit" class="submit-button">Adicionar Quadro</button>

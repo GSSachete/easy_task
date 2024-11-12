@@ -11,6 +11,6 @@ urlpatterns = [
     path('', lambda request: redirect('login')),
 ]
 
-# Adicione esta linha para servir arquivos de mídia durante o desenvolvimento
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

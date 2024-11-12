@@ -19,7 +19,6 @@ def menu(request):
     busca_titulo = request.GET.get('busca_titulo', '')
     filtro_prioridade = request.GET.get('filtro_prioridade', '')
 
-    # Filtra quadros pertencentes ao usuário
     quadros = Tarefa.objects.filter(usuario=request.user, concluida=False)
 
     # Filtro de busca por título
@@ -43,15 +42,15 @@ def menu(request):
 @login_required
 def adicionar_quadro(request):
     if request.method == 'POST':
-        form = TarefaForm(request.POST, request.FILES)  # Inclua request.FILES para lidar com arquivos
+        form = TarefaForm(request.POST, request.FILES) 
         if form.is_valid():
             tarefa = form.save(commit=False)
             tarefa.usuario = request.user  
             tarefa.save()
 
-            # Salva os arquivos se houver algum (supondo que o campo seja um FileField ou ImageField diretamente em Tarefa)
+           
             if request.FILES.get('arquivo'):
-                tarefa.arquivo = request.FILES.get('arquivo')  # Atribua o arquivo diretamente ao campo
+                tarefa.arquivo = request.FILES.get('arquivo')  
                 tarefa.save()
 
             nomes_usuarios = form.cleaned_data.get('participantes')
@@ -83,9 +82,9 @@ def editar_quadro(request, quadro_id):
         if form.is_valid():
             quadro = form.save(commit=False)  
 
-            # Substitui o arquivo existente se um novo for enviado
+         
             if request.FILES.get('arquivo'):
-                quadro.arquivo = request.FILES.get('arquivo')  # Substitui ou atribui diretamente o arquivo
+                quadro.arquivo = request.FILES.get('arquivo')  
             quadro.save()
 
             nomes_usuarios = form.cleaned_data.get('participantes')
@@ -139,7 +138,6 @@ def concluidos(request):
         participantes=usuario_instancia
     )
 
-    # Aplicando filtros de busca e prioridade
     if busca_titulo:
         tarefas_concluidas = tarefas_concluidas.filter(titulo__icontains=busca_titulo)
 
@@ -182,7 +180,6 @@ def tarefas_em_grupo(request):
         concluida=False
     )
 
-    # Aplicando filtros de busca e prioridade
     if busca_titulo:
         tarefas_em_grupo = tarefas_em_grupo.filter(titulo__icontains=busca_titulo)
 
@@ -223,14 +220,13 @@ def send_message(request):
         recipient_id = data.get('recipient_id')
         content = data.get('content')
 
-        # Verifique se os dados são válidos
         if not recipient_id or not content:
             return JsonResponse({'status': 'Dados inválidos'}, status=400)
 
         try:
-            # Exemplo básico de envio de mensagem
+           
             recipient = User.objects.get(id=recipient_id)
-            # Suponha que exista um modelo Message
+           
             Message.objects.create(sender=request.user, recipient=recipient, content=content)
             return JsonResponse({'status': 'Message sent!'})
         except User.DoesNotExist:
